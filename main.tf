@@ -41,8 +41,15 @@ resource "aws_internet_gateway" "igw" {
 }
 
 resource "aws_subnet" "subnet_public" {
-    vpc_id     = aws_vpc.vpc.id
-    cidr_block = var.cidr_subnet
+    vpc_id              = aws_vpc.vpc.id
+    cidr_block          = var.cidr_subnet
+    availability_zone   = "${var.region}a"
+}
+
+resource "aws_subnet" "subnet_public2" {
+    vpc_id              = aws_vpc.vpc.id
+    cidr_block          = var.cidr_subnet2
+    availability_zone   = "${var.region}b"
 }
 
 resource "aws_route_table" "rtb_public" {
@@ -124,12 +131,41 @@ resource "aws_instance" "app_server" {
 
     provisioner "remote-exec" {
         inline = [
+#            "export DB_USERNAME=${var.db_username}",
+#            "export DB_NAME=${var.db_name}",
+#            "export DB_PORT=${var.db_port}",
+#            "export DB_PASSWORD=${var.db_password}",
+#            "export DB_ENDPOINT=${aws_db_instance.psg_db.address}",
             "sudo chmod +x /tmp/script.sh",
-            "sudo /tmp/script.sh"
+            "sudo /tmp/script.sh",
         ]
     }
 
 }
+
+#resource "aws_db_subnet_group" "_" {
+#    name        = "db_subnet_group"
+#    subnet_ids  = [
+#        aws_subnet.subnet_public.id,
+#        aws_subnet.subnet_public2.id,
+#    ]
+#}
+#
+#resource "aws_db_instance" "psg_db" {
+#    allocated_storage       = 5
+#    engine                  = "postgres"
+#    engine_version          = "16.1"
+#    instance_class          = "db.t3.micro"
+#    password                = var.db_password
+#    username                = var.db_username
+#    port                    = var.db_port
+#    db_name                 = var.db_name
+#
+#    db_subnet_group_name    = aws_db_subnet_group._.id
+#    vpc_security_group_ids  = [aws_security_group.sg.id]
+#
+#    skip_final_snapshot     = true
+#}
 
 resource "tls_private_key" "pk" {
     algorithm   = "RSA"

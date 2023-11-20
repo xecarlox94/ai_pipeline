@@ -9,9 +9,15 @@ variable "cidr_vpc" {
   description = "CIDR block for the VPC"
   default     = "10.1.0.0/16"
 }
+
 variable "cidr_subnet" {
   description = "CIDR block for the subnet"
   default     = "10.1.0.0/24"
+}
+
+variable "cidr_subnet2" {
+  description = "CIDR block for the subnet"
+  default     = "10.1.128.0/24"
 }
 
 variable "environment_tag" {
@@ -34,6 +40,23 @@ variable "region" {
   default       = "eu-west-2"
 }
 
-#variable "private_ssh_key" {
-#    description = "ssh private key, please run the command: export TF_VAR_private_ssh_key=$(cat ~/.ssh/id_rsa)"
-#}
+variable "db_username" {
+    description = "DB username"
+    default     = "ubuntu"
+}
+
+variable "db_name" {
+    description = "DB name"
+    default     = "mlflow_db"
+}
+
+variable "db_port" {
+    description = "DB port"
+    default     = 5432
+}
+
+variable "db_password" {
+    description = "DB password"
+    default     = "password"
+}
+
