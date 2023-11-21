@@ -39,24 +39,3 @@ variable "region" {
   description   = "The region Terraform deploys your instance"
   default       = "eu-west-2"
 }
-
-variable "db_username" {
-    description = "DB username"
-    default     = "ubuntu"
-}
-
-variable "db_name" {
-    description = "DB name"
-    default     = "mlflow_db"
-}
-
-variable "db_port" {
-    description = "DB port"
-    default     = 5432
-}
-
-variable "db_password" {
-    description = "DB password"
-    default     = "password"
-}
-

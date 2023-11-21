@@ -5,6 +5,7 @@ sudo apt upgrade -yq &&\
 sudo apt install -yq \
     tmux \
     vim \
+    postgresql \
     python3-pip
 
 
